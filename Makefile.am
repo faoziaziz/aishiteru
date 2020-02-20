@@ -1,17 +1,7 @@
 ## run autogen.sh to create Makefile.in from this file
 ACLOCAL_AMFLAGS = -I m4
 
-if ENABLE_TRAINING
 TRAINING_SUBDIR = src/training
-training: all
-	@$(MAKE) -C src/training
-training-install: training
-	@$(MAKE) -C src/training install
-training-uninstall:
-	@$(MAKE) -C src/training uninstall
-clean-local:
-	@$(MAKE) -C src/training clean
-
 
 .PHONY:
 

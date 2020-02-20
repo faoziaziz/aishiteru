@@ -57,7 +57,7 @@ GENERIC_LIBRARY_VERSION=$GENERIC_MAJOR_VERSION:$GENERIC_MINOR_VERSION
 AC_SUBST([GENERIC_API_VERSION])
 AC_SUBST([GENERIC_MAJOR_VERSION])
 AC_SUBST([GENERIC_MINOR_VERSION])
-AC_SUBST([GENERIC_MICRO_VERSION])
+
 
 AC_SUBST([GENERIC_LIBRARY_VERSION])
 PACKAGE=$GENERIC_LIBRARY_NAME
@@ -76,15 +76,11 @@ AM_CONDITIONAL([OSX], false)
 AM_CONDITIONAL([GRAPHICS_DISABLED], false)
 AC_SUBST([AM_CPPFLAGS])
 
-
-
 #############################
 #
 # Platform specific setup
 #
 #############################
-AC_CANONICAL_HOST
-
 # The test code used by AX_CHECK_COMPILE_FLAG uses an empty statement
 # and unused macros which must not raise a compiler error, but it must
 # be an error if flags like -avx are ignored on ARM and other
@@ -202,13 +198,6 @@ echo "$ make"
 echo "$ sudo make install"
 echo "$ sudo ldconfig"
 echo ""
-AM_COND_IF([ASCIIDOC],
-  [
-   echo "This will also build the documentation."
-  ], [
-   echo "Documentation will not be built because asciidoc or xsltproc is missing."
-  ]
-)
 # echo "$ sudo make install LANGS=\"eng ara deu\""
 # echo "  Or:"
 # echo "$ sudo make install-langs"
