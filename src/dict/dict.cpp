@@ -8,18 +8,18 @@
 #include "dict.h"
 
 
-Dict:Dict(){
+Dict::Dict(){
   cout<<"this is dickt"<<endl;
 };
-void Dict:getDict(){
+void Dict::getDict(){
 
   cout<<"getdict"<<endl;
 
 };
-void Dict:getText(){
+void Dict::getText(){
   cout<<"get text"<<endl;
 
 }
-Dict:~Dict(){
+Dict::~Dict(){
   cout<<"destructor"<<endl;
 };

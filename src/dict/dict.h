@@ -11,4 +11,4 @@ public:
 private:
   int x_mode;
   int y_mode;
-}
+};
