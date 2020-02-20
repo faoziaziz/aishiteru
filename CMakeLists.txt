@@ -13,8 +13,8 @@ cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
 if ("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
     message(FATAL_ERROR
-        "CMake generation is not possible within the source directory!"
-        "\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"
+        "CMake tidak bisa di build disini."
+        "\n silahkan ganti direktory build anda"
         "\n "
         "\n rm CMakeCache.txt"
         "\n mkdir build"
@@ -74,12 +74,12 @@ include(CheckCXXCompilerFlag)
 get_property(known_features GLOBAL PROPERTY CMAKE_CXX_KNOWN_FEATURES)
 if (cxx_std_17 IN_LIST known_features)
   set(CMAKE_CXX_STANDARD 17)
-  message(STATUS "Your CXX standard is 17")
+  message(STATUS "Kamu menggunakan standard C++ 17")
 elseif (cxx_std_14 IN_LIST known_features)
-  message(STATUS "Your CXX standard is 14")
+  message(STATUS "Kamu menggunakan standard C++ 14")
   set(CMAKE_CXX_STANDARD 14)
 else() # minimum standard required
-  message(STATUS "Your CXX standard is 11")
+  message(STATUS "Kamu menggunakan standard C++ 11")
   set(CMAKE_CXX_STANDARD 11)
 endif()
 
@@ -117,21 +117,11 @@ list(APPEND arch_files
 
   )
 
-add_library(libaishiteru ${aishiteru_src})
-
-################################
-# AISHITERU executable program #
-################################
-get_target_property(aishiteru_NAME libaishiteru NAME)
-get_target_property(aishiteru_VERSION libaishiteru VERSION)
-get_target_property(aishiteru_OUTPUT_NAME libaishiteru OUTPUT_NAME)
-
-
-
 file(GLOB aishiteru_hdr
   src/arch/*.h
   src/dict/*.h
   )
+
 set(aishiteru_src ${aishiteru_src}
   src/api/baseapi.cpp
   src/api/capi.cpp
@@ -139,7 +129,41 @@ set(aishiteru_src ${aishiteru_src}
 
 set(aishiterumain_src src/api/aishiterumain.cpp)
 
+add_library(libaishiteru ${aishiteru_src})
+################################
+# AISHITERU executable         #
+################################
+
+
 add_executable(aishiteru ${aishiterumain_src})
+target_link_libraries(aishiteru libaishiteru)
+
+################################
+# AISHITERU install            #
+################################
+get_target_property(aishiteru_NAME libaishiteru NAME)
+get_target_property(aishiteru_VERSION libaishiteru VERSION)
+get_target_property(aishiteru_OUTPUT_NAME libaishiteru OUTPUT_NAME)
+
+
+configure_file(aishiteru.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/aishiteru.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aishiteru.pc DESTINATION lib/pkgconfig)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aishiteru.pc DESTINATION lib/pkgconfig)
+install(TARGETS aishiteru RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(TARGETS libaishiteru EXPORT AishiteruTargets RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(EXPORT AishiteruTargets DESTINATION cmake)
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/AishiteruConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/AishiteruConfig-version.cmake
+    DESTINATION cmake)
+install(FILES
+    # from api/makefile.am
+    include/aishiteru/capi.h
+    include/aishiteru/train.h
+    DESTINATION include/aishiteru)
+  
+
+
 
 
 ##########################################

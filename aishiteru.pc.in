@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+datarootdir = @datarootdir@
+datadir=@datadir@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_NAME@
+Description: Aishiteru dikembangkan oleh Aziz Amerul Faozi.
+URL: https://github.com/faoziaziz/aishiteru.git
+Version: @VERSION@
+Libs: -L${libdir} -laishiteru
+Cflags: -I${includedir}
