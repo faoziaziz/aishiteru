@@ -1,6 +1,6 @@
 #+TITLE: Aishiteru
-
+#+AUTHOR: Aziz Faozi
 * Resah Gelisah
 
 ** Jalani hidup tanpa bu trimah
-mantap
+This code just test using ai shiteru
